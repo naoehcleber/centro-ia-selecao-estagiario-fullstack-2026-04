@@ -1,0 +1,1 @@
+# centro-ia-selecao-estagiario-fullstack-2026-04
