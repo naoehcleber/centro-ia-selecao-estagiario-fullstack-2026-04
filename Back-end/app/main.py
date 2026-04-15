@@ -1,4 +1,9 @@
 from fastapi import FastAPI
+import easyocr
+from PIL import Image
+import numpy as np
+
+
 
 app = FastAPI()
 
