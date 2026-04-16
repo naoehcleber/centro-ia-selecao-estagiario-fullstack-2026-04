@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import {  useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import ImageUploader from './components/FileLoader.tsx'
 
@@ -9,15 +9,24 @@ function App() {
   const uploadToServer = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
+    try{
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
-    const response = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
+      if(response.ok){
+        const data = await response.json();
+        console.log("Success:", data);
+      }
+    } catch(error) {
+      console.error("Upload failed:", error);
+    }
   };
 
   return (
     <div>
+      <h3> Teste</h3>
       <h1>Tradutor de texto de imagens</h1>
       <div>
       <Link to="/about">Sobre o Projeto</Link>
