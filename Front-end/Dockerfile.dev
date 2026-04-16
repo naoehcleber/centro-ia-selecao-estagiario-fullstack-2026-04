@@ -5,25 +5,27 @@ ARG NODE_VERSION=24.14.0-alpine
  
 FROM node:${NODE_VERSION} AS dev
  
+RUN mkdir -p /app && chown node:node /app
+
 # Set working directory inside the container
 WORKDIR /app
+
+USER node
  
 # Copy package files
-COPY app/package*.json ./
+COPY --chown=node:node app/package*.json ./
  
 # Install dependencies
 RUN npm install
  
 # Copy rest of the source code
-COPY . .
- 
+COPY --chown=node:node app/. . 
  
 # Ensure the "node" user owns the application files
-RUN chown -R node:node /app
+# RUN chown -R node:node /app
  
  
 # Switch to the built-in non-root "node" user
-USER node
  
  
 # Expose Vite dev server port
