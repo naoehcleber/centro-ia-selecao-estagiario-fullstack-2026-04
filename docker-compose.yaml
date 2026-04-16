@@ -1,0 +1,20 @@
+networks:
+  app-networks:
+    driver: bridge
+services:
+  back-end:
+    build:
+      context: ./Back-end
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app-networks
+  front-end:
+    build:
+      context: ./Front-end
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    networks:
+      - app-networks
