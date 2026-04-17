@@ -18,7 +18,7 @@ app.add_middleware(
 
 
 @app.post("/api/upload")
-async def process_image(file: UploadFile = File(...), target_lang: str):
+async def process_image(file: UploadFile = File(...), target_lang: str = "pt"):
     # 1. Read the uploaded file into bytes
     contents = await file.read()
     
@@ -41,12 +41,12 @@ async def process_image(file: UploadFile = File(...), target_lang: str):
         "filename": file.filename,
         "text": extracted_text,
         "translated_text": translated_text,
-        "target_language": target_lang
+        "target_language": targetLang
     }
-async def translate text(text):
 
 
-@app.get("/")
+
+@app.get("/api")
 def read_root():
     return {"Hello": "World"}
 
