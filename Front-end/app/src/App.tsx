@@ -1,16 +1,21 @@
 import {  useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import ImageUploader from './components/FileLoader.tsx'
-
+import LanguageSelector from './components/LanguageSelector.tsx';
 import './App.css'
 
 function App() {
+
+
+  const [targetLang, setTargetLang] = useState('pt'); // Default to Portuguese
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
   
   const uploadToServer = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
     try{
-      const response = await fetch('/api/upload', {
+      const response = await fetch(`/api/upload?target_lang=${targetLang}`, {
         method: 'POST',
         body: formData,
       });
@@ -34,7 +39,10 @@ function App() {
       </div>
       <div>
         <ImageUploader onUpload={uploadToServer}/>
-
+        <LanguageSelector 
+          selectedLanguage={targetLang} 
+          onChange={setTargetLang} 
+        />
 
       </div>
     </div>
