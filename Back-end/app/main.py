@@ -4,7 +4,7 @@ import easyocr
 from PIL import Image
 import numpy as np
 import cv2
-
+from deep_translator import GoogleTranslator
 
 app = FastAPI()
 reader = easyocr.Reader(['pt', 'en'])
@@ -18,7 +18,7 @@ app.add_middleware(
 
 
 @app.post("/api/upload")
-async def process_image(file: UploadFile = File(...)):
+async def process_image(file: UploadFile = File(...), target_lang: str):
     # 1. Read the uploaded file into bytes
     contents = await file.read()
     
@@ -32,11 +32,19 @@ async def process_image(file: UploadFile = File(...)):
     
     # 4. Join the list of strings into one text block
     extracted_text = " ".join(result)
-    
+    translated_text = ""
+    if extracted_text.strip():
+        # GoogleTranslator(source='auto', target='en')
+        translated_text = GoogleTranslator(source='auto', target=target_lang).translate(extracted_text)
+
     return {
         "filename": file.filename,
-        "text": extracted_text
+        "text": extracted_text,
+        "translated_text": translated_text,
+        "target_language": target_lang
     }
+async def translate text(text):
+
 
 @app.get("/")
 def read_root():
