@@ -1,8 +1,9 @@
 import {  useState, useRef } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 import ImageUploader from './components/FileLoader.tsx'
 import LanguageSelector from './components/LanguageSelector.tsx';
 import './App.css'
+import About from './About.tsx';
 
 function App() {
 
@@ -38,11 +39,12 @@ function App() {
 
   return (
     <div>
-      <h3> Teste</h3>
       <h1>Tradutor de texto de imagens</h1>
       <div>
-      <Link to="/about">Sobre o Projeto</Link>
-      <Link to="/about"></Link>1
+        <Routes>
+          <Route path="/about" element={<About />} />
+        </Routes>
+        <Link to={'/about'}>Sobre o Projeto</Link>
       </div>
       <div>
         <ImageUploader onUpload={uploadToServer}/>
