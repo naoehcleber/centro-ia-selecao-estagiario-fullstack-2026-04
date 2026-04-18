@@ -13,3 +13,4 @@ Shapely
 pyclipper
 ninja
 deep_translator
+ollama

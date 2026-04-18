@@ -2,6 +2,13 @@ networks:
   app-networks:
     driver: bridge
 services:
+  ollama:
+      image: ollama/ollama
+      volumes:
+        - ./ollama-models:/root/.ollama
+      ports:
+        - 11434:11434
+      command: ollama pull deepseek-ocr
   back-end:
     build:
       context: ./Back-end
