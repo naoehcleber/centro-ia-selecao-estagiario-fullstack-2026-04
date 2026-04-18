@@ -39,11 +39,10 @@ function App() {
 
   return (
     <div>
+
       <h1>Tradutor de texto de imagens</h1>
       <div>
-        <Routes>
-          <Route path="/about" element={<About />} />
-        </Routes>
+        
         <Link to={'/about'}>Sobre o Projeto</Link>
       </div>
       <div>
