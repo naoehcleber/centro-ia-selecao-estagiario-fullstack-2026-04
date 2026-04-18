@@ -44,6 +44,8 @@ function App() {
       <div>
         
         <Link to={'/about'}>Sobre o Projeto</Link>
+        <Link to={'/handwirting'}>Reconhecimento de escrita a mão</Link>
+
       </div>
       <div>
         <ImageUploader onUpload={uploadToServer}/>

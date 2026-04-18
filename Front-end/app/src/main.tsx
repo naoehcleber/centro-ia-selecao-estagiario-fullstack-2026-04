@@ -1,9 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './index.css'
-import App from './App.tsx'
-import About from './About.tsx'
+import './index.css';
+import App from './App.tsx';
+import About from './About.tsx';
+import Handwriting from './Handwriting.tsx';
 
 const style = {
   container: {
@@ -70,6 +71,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/about" element={<About />} />
+        <Route path="/handwirting" element={<Handwriting />} />
         <Route path="/" element={<App />} />
       </Routes>
     </BrowserRouter>

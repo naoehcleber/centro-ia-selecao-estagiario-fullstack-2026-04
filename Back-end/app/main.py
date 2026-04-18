@@ -5,6 +5,7 @@ from PIL import Image
 import numpy as np
 import cv2
 from deep_translator import GoogleTranslator
+import ollama
 
 app = FastAPI()
 reader = easyocr.Reader(['pt', 'en'])
@@ -42,6 +43,24 @@ async def process_image(file: UploadFile = File(...), target_lang: str = "pt"):
         "text": extracted_text,
         "translated_text": translated_text,
         "target_language": target_lang
+    }
+
+@app.post("/api/uploadHandwriting")
+async def readHandwriting(file: UploadFile):
+    image = await file.read()
+    response = ollama.chat(
+    model='deepseek-ocr',
+    messages=[{
+        'role': 'user',
+        'content': 'Extract all text from this image and format it as JSON.',
+        'images': [image]
+        }]
+    )
+    extracted_text = response['message']['content']
+
+    return {
+        "filename": file.filename,
+        "text": extracted_text
     }
 
 

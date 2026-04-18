@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -6,34 +6,54 @@ import { Routes } from "react-router-dom";
 
 import ImageUploader from "./components/FileLoader";
 
-
 function Handrwriting() {
-    
-    return (
-        <>
-        <div>
-        <ImageUploader onUpload={uploadToServer}/>
-        {loading && <p>Processing image and translating...</p>}
-      </div>
-      <div>
 
-        {result && (
-        <div style={{ marginTop: '30px', borderTop: '1px solid #ccc' }}>
-          <h4>Original Text:</h4>
-          {/* Use result.text to match your Python return */}
-          <p style={{ background: '#f4f4f4', padding: '10px' }}>
-            {result.text}
-          </p>
+    interface TranscriptionResult {
+    filename: string;
+    text: string;           // Match your FastAPI key: "text"  
+  }
+
+    const [result, setResult] = useState<TranscriptionResult | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+      
+    const uploadToServer = async (file: File) => {
+        setLoading(true); // Ative o loading!
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+          const response = await fetch(`/api/uploadHandwriting`, {
+            method: 'POST',
+            body: formData,
+          });
+    
+          if (response.ok) {
+            const data = await response.json();
+            setResult(data);
+          }
+        } catch (error) {
+          console.error("Upload failed:", error);
+        } finally {
+          setLoading(false);
+        }
+    };
+
+    return (
+        <div style={{ padding: '20px' }}>
+          <h2>Transcrição de Caligrafia (IA)</h2>
+          <ImageUploader onUpload={uploadToServer}/>
           
-          <h4>Translated ({result.target_language}):</h4>
-          <p style={{ background: '#e0f7fa', padding: '10px', fontWeight: 'bold' }}>
-            {result.translated_text}
-          </p>
+          {loading && <p>A IA está lendo a imagem... Por favor, aguarde.</p>}
+
+          {result && (
+            <div style={{ marginTop: '30px', borderTop: '1px solid #ccc' }}>
+              <h4>Texto Extraído:</h4>
+              <p style={{ background: '#f4f4f4', padding: '15px', borderRadius: '8px', whiteSpace: 'pre-wrap' }}>
+                {result.text}
+              </p>
+            </div>
+          )}
         </div>
-      )}
-      </div>
-      </>
     );
 }
-
 export default Handrwriting;
