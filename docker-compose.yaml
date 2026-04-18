@@ -5,14 +5,17 @@ services:
   ollama:
       image: ollama/ollama
       volumes:
-        - ./ollama-models:/root/.ollama
+        - ./Agentes/ollama-models:/root/.ollama
       ports:
         - 11434:11434
-      command: ollama pull deepseek-ocr
+      networks:
+        - app-networks
   back-end:
     build:
       context: ./Back-end
       dockerfile: Dockerfile
+    depends_on:
+      - ollama
     develop:
       watch:
         - action: sync

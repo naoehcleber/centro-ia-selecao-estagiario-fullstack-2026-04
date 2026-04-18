@@ -5,10 +5,12 @@ from PIL import Image
 import numpy as np
 import cv2
 from deep_translator import GoogleTranslator
-import ollama
+from ollama import Client
+
 
 app = FastAPI()
 reader = easyocr.Reader(['pt', 'en'])
+client = Client(host='http://ollama:11434')
 
 app.add_middleware(
     CORSMiddleware,
@@ -46,9 +48,9 @@ async def process_image(file: UploadFile = File(...), target_lang: str = "pt"):
     }
 
 @app.post("/api/uploadHandwriting")
-async def readHandwriting(file: UploadFile):
+async def readHandwriting(file: UploadFile = File(...)):
     image = await file.read()
-    response = ollama.chat(
+    response = client.chat(
     model='deepseek-ocr',
     messages=[{
         'role': 'user',
