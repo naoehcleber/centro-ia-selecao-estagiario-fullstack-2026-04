@@ -41,7 +41,7 @@ async def process_image(file: UploadFile = File(...), target_lang: str = "pt"):
         "filename": file.filename,
         "text": extracted_text,
         "translated_text": translated_text,
-        "target_language": targetLang
+        "target_language": target_lang
     }
 
 
