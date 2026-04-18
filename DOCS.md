@@ -48,8 +48,10 @@ Um usuário entraria na aplicação, realizaria o upload da sua foto contendo o 
 - Limite máximo de imagens de 1Mb;
 - Uso de LLM locais devido ao Ollama;
 - Impossibilidade de atualizar o modelo de IA sem mudar a arquitetura do projeto
+- Má performance do OCR de leitura de caligrafia 
 
 # Possíveis evoluções futuras
 - Implementação de Modelos de OCR treinados sem depender de LLMS e Modelos pré-prontos;
 - Melhoras no Front-End;
 - Melhora na velocidade de resposta do Back-end.
+- Melhora na leitura de textos manuscritos
